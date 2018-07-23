@@ -1,0 +1,92 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+if (!useNamespace) {
+	namespace = StringPool.BLANK;
+}
+
+Object bodyContent = request.getAttribute("aui:button:bodyContent");
+
+String bodyContentString = StringPool.BLANK;
+
+if (bodyContent != null) {
+	bodyContentString = bodyContent.toString();
+}
+
+boolean dropdown = Validator.isNotNull(bodyContentString.trim());
+
+String escapedHREF = StringPool.BLANK;
+
+if (Validator.isNotNull(href)) {
+	escapedHREF = HtmlUtil.escapeAttribute(PortalUtil.escapeRedirect(href));
+}
+else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
+	href = onClick;
+
+	escapedHREF = HtmlUtil.escapeAttribute(PortalUtil.escapeRedirect(href));
+}
+
+if (useDialog && Validator.isNotNull(escapedHREF)) {
+	if (data == null) {
+		data = new HashMap<String, Object>();
+	}
+
+	data.put("href", href);
+	data.put("title", LanguageUtil.get(resourceBundle, value));
+
+	onClick = StringPool.BLANK;
+
+	if (Validator.isNull(name)) {
+		name = StringUtil.randomId();
+	}
+}
+
+if (Validator.isNull(id)) {
+	if (Validator.isNotNull(name)) {
+		id = name;
+	}
+	else {
+		id = StringUtil.randomId();
+	}
+}
+
+id = namespace + id;
+
+if (primary == null) {
+	if (type.equals("submit")) {
+		primary = true;
+	}
+	else {
+		primary = false;
+	}
+}
+else {
+	primary = GetterUtil.getBoolean(String.valueOf(primary));
+}
+
+if (primary == Boolean.TRUE) {
+	cssClass += " btn-primary";
+}
+
+if (type.equals("cancel")) {
+	cssClass += " btn-cancel btn-default";
+}
+
+if (dropdown) {
+	cssClass += " dropdown-toggle direction-down";
+}
+%>

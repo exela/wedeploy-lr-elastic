@@ -1,0 +1,37 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
+
+	<%
+	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.HEADER_PORTAL_CSS, PortletResourceAccessor.HEADER_PORTLET_CSS};
+	PredicateFilter<String> predicateFilter = PredicateFilter.ALL;
+	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeCssFastLoad();
+	%>
+
+	<%@ include file="/html/common/themes/portlet_resources.jspf" %>
+
+	<%
+	for (String url : urls) {
+	%>
+
+		<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(url) %>" id="<%= HtmlUtil.escapeAttribute(StringUtil.toHexString(url.hashCode())) %>" rel="stylesheet" type="text/css" />
+
+	<%
+	}
+	%>
+
+</c:if>

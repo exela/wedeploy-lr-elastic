@@ -1,0 +1,85 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+if (!useNamespace) {
+	namespace = StringPool.BLANK;
+}
+
+String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:baseType"));
+String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
+
+if (Validator.isNull(label) && changesContext) {
+	title = StringUtil.appendParentheticalSuffix(LanguageUtil.get(resourceBundle, title), LanguageUtil.get(resourceBundle, "changing-the-value-of-this-field-reloads-the-page"));
+}
+else if (Validator.isNotNull(title)) {
+	title = LanguageUtil.get(resourceBundle, title);
+}
+
+boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean");
+boolean radioField = baseType.equals("radio");
+
+boolean showForLabel = true;
+
+if (type.equals("assetCategories") || baseType.equals(Date.class.getName())) {
+	showForLabel = false;
+}
+
+if ((radioField || checkboxField) && Validator.isNull(inlineLabel)) {
+	inlineLabel = "right";
+}
+
+String addOnCssClass = StringPool.BLANK;
+
+if (helpTextCssClass.equals("input-group-addon")) {
+	addOnCssClass = addOnCssClass.concat("input-group");
+}
+
+String controlGroupCssClass = AUIUtil.buildControlGroupCss(inlineField, inlineLabel, wrapperCssClass, baseType);
+String baseTypeCssClass = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);
+
+String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
+
+if (baseType.equals("email") || baseType.equals("password") || baseType.equals("text") || baseType.equals("textarea")) {
+	fieldCssClass += " form-control";
+}
+
+if (type.equals("toggle-card")) {
+	fieldCssClass += " toggle-card";
+}
+
+if (type.equals("toggle-switch")) {
+	fieldCssClass += " toggle-switch";
+}
+
+boolean useInputWrapper = true;
+
+String inputWrapperClass = controlGroupCssClass;
+
+if (radioField) {
+	inputWrapperClass = baseTypeCssClass;
+
+	if (Validator.isNull(label)) {
+		useInputWrapper = false;
+	}
+}
+
+if (inputWrapperClass.equals("boolean")) {
+	inputWrapperClass = "checkbox";
+}
+
+String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel, disabled);
+%>

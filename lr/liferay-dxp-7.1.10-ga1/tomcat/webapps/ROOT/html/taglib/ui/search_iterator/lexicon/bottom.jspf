@@ -1,0 +1,107 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+		<c:if test="<%= paginate %>">
+			<div class="taglib-search-iterator-page-iterator-bottom">
+				<liferay-ui:search-paginator
+					id='<%= id + "PageIteratorBottom" %>'
+					markupView="<%= markupView %>"
+					searchContainer="<%= searchContainer %>"
+					type="<%= type %>"
+				/>
+			</div>
+		</c:if>
+	</div>
+</div>
+
+<c:if test="<%= Validator.isNotNull(id) %>">
+	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
+
+	<%
+	String modules = "liferay-search-container";
+	String rowCheckerRowSelector = StringPool.BLANK;
+
+	if (rowMover != null) {
+		modules += ",liferay-search-container-move";
+	}
+
+	if (rowChecker != null) {
+		modules += ",liferay-search-container-select";
+
+		rowCheckerRowSelector = rowChecker.getRowSelector();
+
+		if (Validator.isNull(rowCheckerRowSelector)) {
+			rowCheckerRowSelector = "[data-selectable=\"true\"]";
+		}
+	}
+	%>
+
+	<aui:script use="<%= modules %>">
+		var plugins = [];
+
+		var rowSelector = '<%= rowHtmlTag %><%= rowCheckerRowSelector %>';
+
+		<c:if test="<%= rowChecker != null %>">
+			var rememberCheckBoxState = <%= rowChecker.isRememberCheckBoxState() %>;
+
+			<c:if test="<%= rowChecker.isRememberCheckBoxState() && Validator.isNotNull(rowChecker.getRememberCheckBoxStateURLRegex()) %>">
+				rememberCheckBoxState = '<%= rowChecker.getRememberCheckBoxStateURLRegex() %>';
+			</c:if>
+
+			plugins.push(
+				{
+					cfg: {
+						keepSelection: rememberCheckBoxState,
+						rowSelector: rowSelector
+					},
+					fn: A.Plugin.SearchContainerSelect
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= rowMover != null %>">
+			var rowMoverConfig = <%= rowMover.toJSON().toString() %>;
+
+			rowMoverConfig.rowSelector = rowSelector + rowMoverConfig.rowSelector;
+
+			plugins.push(
+				{
+					cfg: rowMoverConfig,
+					fn: A.Plugin.SearchContainerMove
+				}
+			);
+		</c:if>
+
+		var searchContainer = new Liferay.SearchContainer(
+			{
+				id: '<%= namespace + id %>',
+				plugins: plugins
+			}
+		).render();
+
+		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
+
+		var destroySearchContainer = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				searchContainer.destroy();
+
+				Liferay.detach('destroyPortlet', destroySearchContainer);
+			}
+		};
+
+		Liferay.on('destroyPortlet', destroySearchContainer);
+	</aui:script>
+</c:if>

@@ -1,0 +1,12 @@
+{
+	"id": "lr",
+	"volumes": {
+		"osgi": "/usr/local/liferay/osgi",
+		"data": "/usr/local/liferay/data",
+		"deploy": "/usr/local/liferay/deploy"
+	},
+	"cpu": 6,
+	"memory": 8192,
+	"dependencies": ["es"],
+	"port": 8080
+}

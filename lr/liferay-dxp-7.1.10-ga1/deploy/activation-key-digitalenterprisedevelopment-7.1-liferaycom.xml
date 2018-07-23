@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<license>
+	<account-name>Liferay.com</account-name>
+	<owner>Liferay.com</owner>
+	<description>Liferay.com</description>
+	<product-name>Digital Enterprise Development</product-name>
+	<product-version>7.1</product-version>
+	<license-name>Digital Enterprise Development (Cluster)</license-name>
+	<license-type>developer-cluster</license-type>
+	<license-version>6</license-version>
+	<start-date>Thursday, July 19, 2018 6:22:20 PM GMT</start-date>
+	<expiration-date>Saturday, August 18, 2018 6:22:20 PM GMT</expiration-date>
+	<max-http-sessions>5</max-http-sessions>
+	<key>58dd0aed525e5c643f51d6d26ffe6414572df58da30d507d957335827630480abe4f4af24b90f0f1d7a35c2766cf8515b8bcd031eb27efb5533d0cac2357d35b39bf7f9e44e282b2e7719ad39d8d69eb65b3eb21d7dfc5255790c036971923c718a57e577a11b3d5caae6a733780d57271741979c152ee3a36305d94c617a2dba95033a7</key>
+</license>

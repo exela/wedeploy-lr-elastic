@@ -1,0 +1,66 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+if (Validator.isNotNull(id)) {
+	id = portletResponse.getNamespace() + id;
+}
+
+StringBundler sb = new StringBundler();
+
+if (Validator.isNotNull(xs)) {
+	_getGridCssClasses(xs, "xs", sb);
+}
+
+if (Validator.isNotNull(sm)) {
+	_getGridCssClasses(sm, "sm", sb);
+}
+
+if (Validator.isNotNull(md)) {
+	_getGridCssClasses(md, "md", sb);
+}
+
+if (Validator.isNotNull(lg)) {
+	_getGridCssClasses(lg, "lg", sb);
+}
+
+String gridCssClasses = sb.toString();
+
+if (Validator.isNull(gridCssClasses)) {
+	if (width > 0) {
+		span = (int)Math.round(_COLUMNS * ((double)width / 100));
+	}
+
+	sb.append("col-md-");
+	sb.append(span);
+
+	gridCssClasses = sb.toString();
+}
+%>
+
+<%!
+private static void _getGridCssClasses(String sizes, String sizeType, StringBundler sb) {
+	for (String size : StringUtil.split(sizes)) {
+		sb.append("col-");
+		sb.append(sizeType);
+		sb.append(StringPool.DASH);
+		sb.append(StringUtil.trim(size));
+		sb.append(StringPool.SPACE);
+	}
+}
+
+private static final int _COLUMNS = 12;
+%>

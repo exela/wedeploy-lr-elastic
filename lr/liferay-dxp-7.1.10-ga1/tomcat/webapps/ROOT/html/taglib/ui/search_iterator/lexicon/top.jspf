@@ -1,0 +1,39 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+if (rowChecker != null) {
+	if (headerNames != null) {
+		headerNames.add(0, StringPool.BLANK);
+
+		normalizedHeaderNames.add(0, "rowChecker");
+	}
+}
+%>
+
+<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
+	<div class="main-content-body" id="<%= namespace + id %>EmptyResultsMessage">
+		<liferay-ui:empty-result-message
+			compact="<%= compactEmptyResultsMessage %>"
+			cssClass="<%= emptyResultsMessageCssClass %>"
+			message="<%= emptyResultsMessage %>"
+			search="<%= searchContainer.isSearch() %>"
+		/>
+	</div>
+</c:if>
+
+<div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %> lfr-search-container-wrapper <%= displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) ? StringPool.BLANK : "main-content-body" %>">
+	<div id="<%= namespace + id %>SearchContainer">

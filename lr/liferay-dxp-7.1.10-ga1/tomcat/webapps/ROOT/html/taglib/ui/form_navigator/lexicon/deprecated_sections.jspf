@@ -1,0 +1,54 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<aui:fieldset-group markupView="lexicon">
+
+	<%
+	String section = deprecatedCategorySections[0];
+
+	String sectionId = namespace + _getSectionId(section);
+	String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+	%>
+
+	<!-- Begin fragment <%= sectionId %> -->
+
+	<aui:fieldset id="<%= _getSectionId(section) %>">
+		<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+	</aui:fieldset>
+
+	<!-- End fragment <%= sectionId %> -->
+
+	<%
+	for (int i = 1; i < deprecatedCategorySections.length; i++) {
+		section = deprecatedCategorySections[i];
+
+		sectionId = namespace + _getSectionId(section);
+		sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+	%>
+
+		<!-- Begin fragment <%= sectionId %> -->
+
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(section) %>" label="<%= section %>">
+			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+		</aui:fieldset>
+
+		<!-- End fragment <%= sectionId %> -->
+
+	<%
+	}
+	%>
+
+</aui:fieldset-group>

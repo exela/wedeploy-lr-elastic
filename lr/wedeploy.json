@@ -7,6 +7,6 @@
 	},
 	"cpu": 6,
 	"memory": 8192,
-	"dependencies": ["search"],
+	"dependencies": ["search", "db"],
 	"port": 8080
 }

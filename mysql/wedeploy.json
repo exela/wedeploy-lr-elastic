@@ -1,0 +1,11 @@
+{
+	"id": "db",
+	"volumes": {
+		"mysqldata": "/var/lib/mysql"
+	},
+	"env": {
+		"MYSQL_ROOT_PASSWORD": "password",
+		"MYSQL_DATABASE": "wedeploy"
+	},
+	"zeroDowntime": false
+}

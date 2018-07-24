@@ -5,5 +5,5 @@
 		"esdata": "/usr/share/elasticsearch/data"
 	},
 	"cpu": 4,
-	"memory": 4096
+	"memory": 8192
 }

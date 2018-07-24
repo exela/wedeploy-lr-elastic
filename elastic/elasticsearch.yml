@@ -1,3 +1,4 @@
 network.host: 0.0.0.0
 cluster.name: "LiferayElasticsearchCluster"
 xpack.license.self_generated.type: basic
+discovery.zen.minimum_master_nodes: 1
